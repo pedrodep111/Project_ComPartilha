@@ -32,7 +32,6 @@ public class Campanha {
     private BigDecimal meta; // Valor alvo de arrecadação
 
     private BigDecimal valorCaptado; // Valor arrecadado até o momento
-    private LocalDate prazo; // Data limite da campanha
 
     @ManyToOne // Muitas campnhas pertencema a uma ONG
     @JoinColumn(name = "ong_id") // Chave estrangeira na tabela campanhas

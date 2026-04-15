@@ -33,6 +33,12 @@ public class DoacaoController {
         return ResponseEntity.ok(doacaoService.buscarPorId(id));
     }
 
+    // Busca todas as doacoes de um Doador específico
+    @GetMapping("/doador/{doadorId}")
+    public List<Doacao> buscarPorDoador(@PathVariable Long doadorId) {
+        return doacaoService.buscarPorDoador(doadorId);
+    }
+
     // Cria uma nova doação
     // @valid aciona as validações definidas na classe Doacao
     @PostMapping
@@ -55,9 +61,4 @@ public class DoacaoController {
         return ResponseEntity.noContent().build();
     }
 
-    // Busca todas as doacoes de um Doador específico
-    @GetMapping("/doador/{doadorId}")
-    public List<Doacao> buscarPorDoador(@PathVariable Long doadorId) {
-        return doacaoService.buscarPorDoador(doadorId);
-    }
 }

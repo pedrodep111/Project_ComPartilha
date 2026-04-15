@@ -1,7 +1,7 @@
 package br.com.ComPartilha.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Email;
@@ -10,7 +10,7 @@ import jakarta.validation.constraints.NotBlank;
 /*
 - Classe base abstrata que represnta um usuario do sistema.
 - ONG e Doador herdam desta classe, compartilhando os campos comuns
-- A estrategia JOINED cria uma tabela separada para acda subclasse, mas mantem os campos comuns na tabela
+- A estrategia JOINED cria uma tabela separada para cada subclasse, mas mantem os campos comuns na tabela
 */
 
 @Data // Gera getters e setters automaticamente
@@ -18,6 +18,11 @@ import jakarta.validation.constraints.NotBlank;
 @Table(name = "usuarios") // Define o nome da tabela no banco de dados
 @Inheritance(strategy = InheritanceType.JOINED) // Herança: cada subclasse tem sua prorpia tabela no banco
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // Evita erros de serialização do hibernate
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Builder
 
 public abstract class Usuario {
     @Id // Esse campo é a chave primária

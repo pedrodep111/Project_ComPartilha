@@ -52,6 +52,14 @@ public class DoacaoService {
                 .orElseThrow(() -> new RuntimeException("Doação não encontrada"));
     }
 
+
+    // Busca todas as doações de um doador específico
+    // @param doadorID - ID da Doador
+    // @return - Lista de Doações do Doador
+    public List<Doacao> buscarPorDoador(Long doadorId) {
+        return doacaoRepository.findByDoadorId(doadorId);
+    }
+
     // Deleta uma doação pelo ID
     // @param id - ID da doação ser deletada
     public void deletar(Long id) {
@@ -76,10 +84,4 @@ public class DoacaoService {
         return doacaoRepository.save(doacao);
     }
 
-    // Busca todas as doações de um doador específico
-    // @param doadorID - ID da Doador
-    // @return - Lista de Doações do Doador
-    public List<Doacao> buscarPorDoador(Long doadorId) {
-        return doacaoRepository.findByDoadorId(doadorId);
-    }
 }
