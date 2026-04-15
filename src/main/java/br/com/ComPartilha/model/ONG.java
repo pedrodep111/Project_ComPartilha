@@ -7,23 +7,17 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotBlank;
 
-/*
-- Representa uma ONG cadastrada no sitema
-- herda os campos comuns de Usuario (nome, email, senha, telefone)
-- Uma ONG pode ter varias campanhas associadas a ela
-*/
-
 @Data
 @Entity
 @Table(name = "ongs")
-@EqualsAndHashCode(callSuper = true) // Incluiu os tipos da classe pai (Usuario) no equals e hashCode
+@EqualsAndHashCode(callSuper = true)
 
 public class ONG extends Usuario {
 
-    @NotBlank(message = "CNPJ é obrigatório") // Não permite CNPJ vazio ou nulo
+    @NotBlank(message = "CNPJ é obrigatório")
     private String cnpj;
 
-    @JsonIgnore // Oculta a lista de campanhas para evitar referência circular na resposta JSON
-    @OneToMany(mappedBy = "ong", cascade = CascadeType.ALL) // Uma ONG tem muitas campanhas
+    @JsonIgnore
+    @OneToMany(mappedBy = "ong", cascade = CascadeType.ALL)
     private List<Campanha> campanhas;
 }

@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ComPartilhaApplication { // Ponto de partida do código
+public class ComPartilhaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ComPartilhaApplication.class, args);
 	}
