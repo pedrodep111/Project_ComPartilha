@@ -14,9 +14,6 @@ import jakarta.validation.constraints.NotBlank;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@Builder
 
 public abstract class Usuario {
     @Id

@@ -5,7 +5,6 @@ import lombok.Data;
 import java.math.BigDecimal;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.NotBlank;
 
 @Data
 @Entity
