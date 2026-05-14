@@ -2,48 +2,86 @@ package br.com.ComPartilha.controller;
 
 import br.com.ComPartilha.model.Campanha;
 import br.com.ComPartilha.service.CampanhaService;
+import br.com.ComPartilha.repository.CampanhaRepository;
+import br.com.ComPartilha.repository.ONGRepository;
+import br.com.ComPartilha.exception.ExceptionUtil;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
 @RequestMapping("/campanhas")
-@RequiredArgsConstructor
 public class CampanhaController {
 
     private final CampanhaService campanhaService;
 
+    public CampanhaController(CampanhaRepository campanhaRepository, ONGRepository ongRepository) {
+        this.campanhaService = new CampanhaService(campanhaRepository, ongRepository);
+    }
+
     @GetMapping
-    public List<Campanha> listarTodas() {
-        return campanhaService.listarTodas();
+    public ResponseEntity<?> listarTodas() {
+        try {
+            return ResponseEntity.ok(campanhaService.listarTodas());
+        } catch (Exception e) {
+            return ExceptionUtil.tratarGenerico(e);
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Campanha> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(campanhaService.buscarPorId(id));
+    public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(campanhaService.buscarPorId(id));
+        } catch (RuntimeException e) {
+            return ExceptionUtil.tratarRuntime(e);
+        } catch (Exception e) {
+            return ExceptionUtil.tratarGenerico(e);
+        }
     }
 
     @GetMapping("/ong/{ongId}")
-    public List<Campanha> buscarPorOng(@PathVariable Long ongId) {
-        return campanhaService.buscarPorOng(ongId);
+    public ResponseEntity<?> buscarPorOng(@PathVariable Long ongId) {
+        try {
+            return ResponseEntity.ok(campanhaService.buscarPorOng(ongId));
+        } catch (Exception e) {
+            return ExceptionUtil.tratarGenerico(e);
+        }
     }
 
     @PostMapping
-    public ResponseEntity<Campanha> salvar(@Valid @RequestBody Campanha campanha) {
-        Campanha salva = campanhaService.salvar(campanha);
-        return ResponseEntity.ok(campanhaService.buscarPorId(salva.getId()));
+    public ResponseEntity<?> salvar(@Valid @RequestBody Campanha campanha) {
+        try {
+            Campanha salva = campanhaService.salvar(campanha);
+            return ResponseEntity.status(HttpStatus.CREATED).body(campanhaService.buscarPorId(salva.getId()));
+        } catch (RuntimeException e) {
+            return ExceptionUtil.tratarRuntime(e);
+        } catch (Exception e) {
+            return ExceptionUtil.tratarGenerico(e);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Campanha> atualizar(@PathVariable Long id,@Valid @RequestBody Campanha campanha) {
-        return ResponseEntity.ok(campanhaService.atualizar(id, campanha));
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @Valid @RequestBody Campanha campanha) {
+        try {
+            return ResponseEntity.ok(campanhaService.atualizar(id, campanha));
+        } catch (RuntimeException e) {
+            return ExceptionUtil.tratarRuntime(e);
+        } catch (Exception e) {
+            return ExceptionUtil.tratarGenerico(e);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        campanhaService.deletar(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> deletar(@PathVariable Long id) {
+        try {
+            campanhaService.deletar(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ExceptionUtil.tratarRuntime(e);
+        } catch (Exception e) {
+            return ExceptionUtil.tratarGenerico(e);
+        }
     }
 }

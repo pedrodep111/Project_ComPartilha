@@ -31,4 +31,6 @@ public abstract class Usuario {
     private String senha;
 
     private String telefone;
+
+    public abstract String getTipo();
 }

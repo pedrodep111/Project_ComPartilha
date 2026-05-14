@@ -20,4 +20,9 @@ public class ONG extends Usuario {
     @JsonIgnore
     @OneToMany(mappedBy = "ong", cascade = CascadeType.ALL)
     private List<Campanha> campanhas;
+
+    @Override
+    public String getTipo() {
+        return "ONG";
+    }
 }

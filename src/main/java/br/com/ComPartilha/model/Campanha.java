@@ -19,6 +19,7 @@ public class Campanha {
     @NotBlank(message = "Título é obrigatório")
     private String titulo;
 
+    @NotBlank
     private String descricao;
 
     @NotNull(message = "Meta é obrigatória")

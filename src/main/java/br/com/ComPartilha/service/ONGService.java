@@ -2,40 +2,28 @@ package br.com.ComPartilha.service;
 
 import br.com.ComPartilha.model.ONG;
 import br.com.ComPartilha.repository.ONGRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class ONGService {
+public class ONGService extends BaseService<ONG, Long> {
 
-    private final ONGRepository ongRepository;
-
-    public ONG salvar(ONG ong) {
-        return ongRepository.save(ong);
+    public ONGService(ONGRepository ongRepository) {
+        super(ongRepository);
     }
 
+    @Override
     public ONG atualizar(Long id, ONG ongAtualizada) {
-        ONG ong = ongRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("ONG não encontrada"));
-        ong.setNome(ongAtualizada.getNome());
-        ong.setEmail(ongAtualizada.getEmail());
-        ong.setCnpj(ongAtualizada.getCnpj());
-        ong.setTelefone(ongAtualizada.getTelefone());
-        return ongRepository.save(ong);
+        try {
+            ONG ong = buscarPorId(id);
+            ong.setNome(ongAtualizada.getNome());
+            ong.setEmail(ongAtualizada.getEmail());
+            ong.setCnpj(ongAtualizada.getCnpj());
+            ong.setTelefone(ongAtualizada.getTelefone());
+            return salvar(ong);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar ONG: " + e.getMessage());
+        }
     }
 
-    public List<ONG> listarTodas() {
-        return ongRepository.findAll();
-    }
-
-    public ONG buscarPorId(Long id) {
-        return ongRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("ONG não encontrada"));
-    }
-
-    public void deletar(Long id) {
-        ongRepository.deleteById(id);
+    public ONG salvar(ONG ong, String extra) {
+        return salvar(ong);
     }
 }

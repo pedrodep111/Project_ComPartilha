@@ -21,4 +21,8 @@ public class Doador extends Usuario{
     @JsonIgnore
     private List<Doacao> doacoes;
 
+    @Override
+    public String getTipo() {
+        return "Doador";
+    }
 }
